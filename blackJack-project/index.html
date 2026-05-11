@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <script type="module" src="./assets/main.js" defer></script>
+  </head>
+  <body>
+    <main class="game-container">
+      <h1>Blackjack🃏</h1>
+
+      <section id="welcome-screen" class="panel">
+        <h2>Welcome</h2>
+
+        <input
+          id="player-name-input"
+          type="text"
+          placeholder="Enter player name"
+        />
+
+        <button id="save-name-btn">Start</button>
+      </section>
+
+      <section id="game-screen" class="hidden">
+        <div class="top-bar">
+          <div>
+            Player:🙆‍♂️
+            <span id="player-name-display">Player</span>
+          </div>
+
+          <button id="sound-toggle">Sound: OFF</button>
+        </div>
+
+        <section class="score-board">
+          <div class="score-card">
+            <h3>Wins</h3>
+            <span id="wins">0</span>
+          </div>
+
+          <div class="score-card">
+            <h3>Losses</h3>
+            <span id="losses">0</span>
+          </div>
+
+          <div class="score-card">
+            <h3>Draws</h3>
+            <span id="draws">0</span>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Dealer🤖</h2>
+          <div id="dealer-hand" class="hand"></div>
+          <div>Score: <span id="dealer-score">?</span></div>
+        </section>
+
+        <section class="section">
+          <h2 id="player-title">🙎 Player</h2>
+          <div id="player-hand" class="hand"></div>
+          <div>Score: <span id="player-score">0</span></div>
+        </section>
+
+        <h2 id="result"></h2>
+
+        <div class="buttons">
+          <button id="start-btn">New Game</button>
+          <button id="hit-btn">Hit</button>
+          <button id="stand-btn">Stand</button>
+          <button id="reset-btn">Reset Score</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
