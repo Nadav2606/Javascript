@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>objects</title>
+  </head>
+  <body>
+    <script>
+      //   const car = {
+      //     brand: "Toyota",
+      //     year: 2025,
+      //     Km: 102.0,
+      //     color: "red",
+      //   };
+      //   console.log(car.year);
+
+      //   const user = {
+      //     userName: "Nadav ben mosche",
+      //     email: "nadavbm1@walla.com",
+      //     password: "56565656",
+      //   };
+
+      //   console.log(`weclome to the website ${user.userName}`);
+
+      //   const dog = {
+      //     name: "Robin",
+      //     bark() {
+      //       console.log("W oof!");
+      //     },
+      //   };
+      //   const score = {
+      //     wins: 0,
+      //     losses: 0,
+      //     ties: 0,
+      //   };
+
+      const person = {
+        name: "random",
+        age: 32,
+        city: "Be'er Ya'akov",
+        job: "Train cashier",
+      };
+
+      const stringedPerson = JSON.stringify(person);
+      console.log(stringedPerson);
+
+      const parsedPerson = JSON.parse(stringedPerson);
+      console.log(parsedPerson);
+    </script>
+  </body>
+</html>

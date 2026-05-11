@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: linear-gradient(#a1c7e0, #00abbd);
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  min-height: 100vh;
+  padding: 25px;
+  color: black;
+}
+
+.app {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+header {
+  text-align: center;
+}
+
+header h1 {
+  font-size: 50px;
+  margin-bottom: 5px;
+}
+
+header p {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+#search-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+  justify-content: center;
+}
+
+#city-input {
+  flex: 1;
+  max-width: 300px;
+  padding: 7px;
+}
+
+#status {
+  text-align: center;
+  font-size: 25px;
+}
+
+.card {
+  background-color: orangered;
+  opacity: 0.9;
+  padding: 18px;
+  text-align: center;
+  border: 2px solid snow;
+  margin-bottom: 24px;
+  border-radius: 5px;
+}
+
+.card h2 {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card .temp {
+  font-size: 21px;
+  margin-bottom: 3px;
+}
+
+button {
+  padding: 5px 35px;
+  background-color: yellowgreen;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: darkgreen;
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document - object model</title>
+  </head>
+  <body>
+    <h1>welcom to the dom - document object model</h1>
+    <button>Click</button>
+    <!-- <button onclick="changeColor(HTMLTextAreaElement)" id="js-btn">
+      Js click
+    </button> -->
+    <p class="js-picks"></p>
+
+    <script>
+      //   console.log((document.body.innerHTML = "hello"));
+      // console.log((document.title = "נדב"));
+
+      // const button1 = document.querySelector("button");
+      // const button2 = document.getElementById("#js-btn");
+
+      // function changeColor() {
+      //   document.body.style.backgroundColor = hexColorCode;
+      // }
+
+      // function clickChangeBg() {
+      //   let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+      //   let rgbValue = "#" + randomColor;
+      //   document.body.style.backgroundColor = rgbValue;
+      // }
+
+      // console.log(typeof button1.style);
+
+      // console.log((document.body.innerHTML = "מה שבאלי"));
+      // document.title = "מה שבאלי";
+
+      // const picks = document.querySelector(".js-picks");
+      // picks.innerHTML = "hey";
+      // console.log(picks);
+
+      const button = document.querySelector("button");
+      // button האלמנט שעליו אנחנו מאזינים
+      // click סוג האירוע (click hover, changing text)
+      // מה לעשות במהלך האירוע
+      button.addEventListener("click", () => {
+        console.log("היי לחצנו עלייך");
+      });
+      button.addEventListener("mouseover", () => {
+        console.log("היי ריחפנו מעליך");
+      });
+
+      function sayHi() {
+        console.log("hello");
+      }
+
+      button.addEventListener("click", sayHi);
+      button.removeEventListener("click", sayHi);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User-Management</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>User-Management👤</h1>
+
+      <div class="form-box">
+        <h2 id="form-title">Add new user:</h2>
+        <form id="user-form">
+          <div class="form-info">
+            <div class="field">
+              <label for="name">Name:</label>
+              <input type="text" id="name" placeholder="Full Name" required />
+            </div>
+
+            <div class="field">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="youremail@example.com"
+                required
+              />
+            </div>
+
+            <div class="field field-small">
+              <label for="age">Age:</label>
+              <input
+                type="Numver"
+                id="age"
+                placeholder="33"
+                min="1"
+                max="120 "
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-buttons">
+            <button type="submit" id="submit-btn">Add User</button>
+            <button type="button" id="cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="info-search">
+        <input type="text" id="search-input" placeholder="search by name..." />
+        <p class="count-line">
+          Total Users: <strong id="user-count">0</strong>
+        </p>
+      </div>
+
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- rows by java script -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://www.flaticon.com/free-icon/weather_678310"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>weather-app</title>
+    <link rel="stylesheet" href="src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Weather app 🌦️⛅</h1>
+        <p>Check the Weather Around the Globe</p>
+      </header>
+
+      <form id="search-form">
+        <input
+          id="city-input"
+          type="text"
+          placeholder="Search a city name(Tel-Aviv, Tokyo ... )"
+        />
+        <button>Search</button>
+      </form>
+      <div id="status"></div>
+      <div id="result"></div>
+      <div class="chart-wrapper">
+        <canvas id="chart"></canvas>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

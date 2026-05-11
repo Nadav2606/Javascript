@@ -1,0 +1,65 @@
+body {
+  background-color: aquamarine;
+  text-align: center;
+}
+
+.frame {
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 35px;
+  color: chartreuse;
+}
+
+.board {
+  display: inline-grid;
+  border: 3.5px solid black;
+  text-align: center;
+  background-color: olivedrab;
+}
+
+.board div {
+  width: 25px;
+  height: 19px;
+}
+
+.snake {
+  background-color: burlywood;
+  border-radius: 10px;
+}
+
+.head {
+  background-color: brown;
+}
+
+.apple::after {
+  content: "🍎";
+}
+.popup.hidden {
+  display: none;
+}
+
+.popup {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.603);
+  z-index: 2;
+  left: 39%;
+  top: 37%;
+}
+
+.popup-box {
+  text-align: center;
+  color: azure;
+  padding: 30px 40px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.603);
+}
