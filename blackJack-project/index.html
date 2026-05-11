@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blackjack Game</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <section id="homeScreen" class="screen">
+      <div class="home-card">
+        <h1>Blackjack</h1>
+
+        <label for="playerNameInput">שם השחקן</label>
+        <input id="playerNameInput" type="text" placeholder="הכנס שם" />
+
+        <label for="startingPointsInput">נקודות התחלה</label>
+        <select id="startingPointsInput">
+          <option value="300">300</option>
+          <option value="500" selected>500</option>
+          <option value="1000">1000</option>
+        </select>
+
+        <button id="startGameBtn">התחל משחק</button>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen hidden">
+      <main class="game-board">
+        <header class="top-bar">
+          <div>שחקן: <span id="playerNameDisplay"></span></div>
+          <div>נקודות שחקן: <span id="playerPointsDisplay">0</span></div>
+          <div>נקודות דילר: <span id="dealerPointsDisplay">1000</span></div>
+          <div>הימור: <span id="currentBetDisplay">0</span></div>
+          <button id="soundBtn" class="sound-btn">🔇 Sound Off</button>
+        </header>
+
+        <section class="dealer-section">
+          <h2>דילר</h2>
+          <div id="dealerScoreDisplay">ניקוד: 0</div>
+          <div id="dealerCards" class="cards-row"></div>
+        </section>
+
+        <section class="center-area">
+          <button id="hitBtn" class="action-btn">Hit</button>
+
+          <div class="message-box">
+            <p id="messageDisplay">לחץ New Game כדי להתחיל סיבוב נוסף</p>
+
+            <div class="bet-buttons">
+              <button class="betBtn chip chip-10" data-bet="10">
+                <span>10</span>
+              </button>
+              <button class="betBtn chip chip-50" data-bet="50">
+                <span>50</span>
+              </button>
+              <button class="betBtn chip chip-100" data-bet="100">
+                <span>100</span>
+              </button>
+              <button class="betBtn chip chip-200" data-bet="200">
+                <span>200</span>
+              </button>
+              <button class="betBtn chip chip-500" data-bet="500">
+                <span>500</span>
+              </button>
+            </div>
+          </div>
+
+          <button id="standBtn" class="action-btn">Stand</button>
+        </section>
+
+        <section class="player-section">
+          <div class="player-title-row">
+            <div>
+              <h2 id="playerSectionName">שחקן</h2>
+              <div id="playerScoreDisplay">ניקוד: 0</div>
+            </div>
+
+            <button id="doubleBtn" class="double-btn">x2</button>
+          </div>
+
+          <div id="playerCards" class="cards-row"></div>
+        </section>
+
+        <button id="newGameBtn" class="new-game-btn">New Game</button>
+      </main>
+    </section>
+
+    <section id="endScreen" class="screen hidden">
+      <div class="home-card">
+        <h1 id="endTitle"></h1>
+        <p id="endText"></p>
+        <button id="backHomeBtn">חזרה למסך הבית</button>
+      </div>
+    </section>
+
+    <script type="module" src="./assets/main.js"></script>
+  </body>
+</html>
