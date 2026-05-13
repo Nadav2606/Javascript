@@ -1,41 +1,39 @@
-# Blackjack Casino Game 🎰🃏
+# Blackjack Game Project
 
 ## Overview
 
-This project is a fully interactive Blackjack casino-style game built with:
+This project is a fully interactive Blackjack card game built with modern JavaScript.
+
+The game was developed using:
 
 - HTML
 - CSS
-- JavaScript (ES6 Modules)
-- OOP (Object-Oriented Programming)
-- Fetch API
-- Async / Await
+- JavaScript
+- Object-Oriented Programming (OOP)
 - DOM Manipulation
 - Event Listeners
-- External Deck API
-- Local Sound System
+- Fetch API
+- Async / Await
 
-The project simulates a modern Blackjack experience with betting mechanics, sound effects, animated dealer turns, and a responsive casino-style interface.
+The game connects to the public Deck Of Cards API in order to generate real shuffled cards during gameplay.
 
 ---
 
 # Features
 
-## 🎴 Blackjack Gameplay
+## Player System
 
-- Full Blackjack game logic
-- Dealer AI behavior
-- Automatic win detection on 21
-- Player bust / dealer bust handling
-- Tie handling
-- Double Bet mechanic (x2)
-- Dealer draws until reaching 17+
+- Player enters a custom name before starting the game.
+- Player starts with 1000 points.
+- Dealer also starts with 1000 points.
 
 ---
 
-## 💰 Betting System
+# Betting System
 
-The game includes a casino chip betting system:
+The game includes a complete betting system with poker-style chips.
+
+Available chips:
 
 - 10
 - 50
@@ -45,216 +43,143 @@ The game includes a casino chip betting system:
 
 Features:
 
-- Flexible betting
-- Combined chip betting
-- Double Bet option
-- Score tracking
-- Dealer bankroll system
+- Multiple chips can be combined.
+- Current bet is displayed live.
+- Player must press **Start Round** to lock the bet and begin the round.
+- Clear Bet button resets the current bet before the round starts.
 
 ---
 
-## 👤 Player System
+# Blackjack manual
 
-At the start of the game:
+The idea of the game is to reach 21 score or hitting a score higher then the dealer
+you start the game by betting, the player start with 1000 points if the player reach zero points the game is over but if the dealer reach zero points then the player win the game.
+after betting the player recive two cards from there the player can do 3 moves:
+pressing "hit" will add an extra card but be careful not to get "bust"(getting a score above 21) when you want to stop you click "stand" and then its the dealer turns.
+if you like your cards you can just press "stand" and hope the dealer wont recive higher score then yours.
+the last move is "double or nothing" (2x) when pressing that button the player doubles his bet (if player bet 100 points by pressing 2x its will be 200 points) and addinonal card opens and then its the dealer move. if you win you will reacive double points and the dealer will lose double points the same way gose if you lose.
+games ends when player or dealer losing all of the points.
 
-- The player chooses a username
-- The player chooses starting points
+# Project Structure
 
-The selected username is displayed during gameplay.
-
----
-
-## 🃏 Card Flow System
-
-### Round Start
-
-When pressing **New Game**:
-
-- Both dealer cards are generated
-- Player receives:
-  - One open card
-  - One hidden card
-
-After placing a bet:
-
-- The second player card is revealed
-- Gameplay becomes active
-
----
-
-## 🔊 Sound System
-
-The project includes local sound support using:
-
-```javascript
-const backgroundMusic = new Audio("./sounds/backgroundMusic.mp3");
-const startSound = new Audio("./sounds/hit.mp3");
-const winSound = new Audio("./sounds/win.mp3");
-const lossSound = new Audio("./sounds/lose.mp3");
-const drawSound = new Audio("./sounds/tie.m4a");
-```
-
-### Sound Features
-
-- Background music
-- Hit sounds
-- Win sound
-- Lose sound
-- Tie sound
-- Toggle ON/OFF button
-- Sound starts OFF by default
-
----
-
-## 🎨 UI / Design
-
-### Casino Style Interface
-
-- Modern casino theme
-- Responsive layout
-- Styled playing cards
-- Casino chips design
-- Hidden/revealed card animations
-- Custom action buttons
-- Compact full-screen layout
-
-### Buttons
-
-- Hit
-- Stand
-- x2 Double Bet
-- New Game
-- Sound Toggle
-
----
-
-# Updated Project Structure
-
-```plaintext
-project-folder/
+```txt
+blackJack-project/
 │
 ├── index.html
 │
 ├── assets/
-│   ├── main.js
-│   ├── ui.js
 │   ├── api.js
-│   │
-│   └── sounds/
-│       ├── backgroundMusic.mp3
-│       ├── hit.mp3
-│       ├── win.mp3
-│       ├── lose.mp3
-│       └── tie.m4a
+│   ├── ui.js
+│   └── main.js
 │
 ├── styles/
 │   └── style.css
 │
+├── sounds/
+│   ├── background.mp3
+│   ├── card.mp3
+│   ├── win.mp3
+│   ├── lose.mp3
+│   ├── draw.mp3
+│   └── blackjack.mp3
+│
 └── README.md
 ```
-
-# JavaScript Architecture
-
-## main.js
-
-Responsible for:
-
-- Main game logic
-- OOP classes
-- Event handling
-- Round flow
-- Win/Loss logic
-- Betting system
-- Sound system
-
----
-
-## ui.js
-
-Responsible for:
-
-- DOM rendering
-- Updating cards
-- Updating scores
-- Updating messages
-- UI state handling
-- Screen switching
-
----
-
-## api.js
-
-Responsible for:
-
-- Connecting to Deck Of Cards API
-- Fetching cards
-- Local fallback deck generation
-- Card conversion system
 
 ---
 
 # Technologies Used
 
-## JavaScript Concepts
+## HTML
 
-- Classes
-- Modules
-- Import / Export
-- Async / Await
-- Fetch API
-- Arrays
-- Objects
-- DOM Manipulation
-- Event Listeners
-- Conditional Logic
-- Timers / Delays
+Used to build:
+
+- Game structure
+- Buttons
+- Betting chips
+- Result screens
+- Card containers
 
 ---
 
-# API Used
-
-Deck Of Cards API:
-
-https://deckofcardsapi.com/
+## CSS
 
 Used for:
 
-- Deck generation
+- Responsive layout
+- Animations
+- Card design
+- Mobile adaptation
+- Chip styling
+- Game table styling
+
+---
+
+## JavaScript
+
+Used for:
+
+- Game logic
+- Score calculations
+- Betting system
+- API communication
+- Sound system
+- DOM updates
+- Event handling
+- Delays and animations
+
+---
+
+# API Usage
+
+The game uses:
+
+Deck Of Cards API
+
+API features used:
+
+- Deck creation
+- Card shuffling
 - Card drawing
-- Shuffle system
 
-The project also includes a local fallback deck if the API becomes unavailable.
+Example endpoint:
 
----
-
-# How To Run
-
-1. Open the project folder in VS Code
-2. Install Live Server extension
-3. Right click `index.html`
-4. Click:
-   `Open with Live Server`
+```txt
+https://deckofcardsapi.com/
+```
 
 ---
 
-# Important Note
+# OOP Structure
 
-Do NOT open the project with double click on `index.html`.
+The project uses Object-Oriented Programming.
 
-The project uses ES6 Modules (`import/export`) which require a local server.
+Main classes:
+
+- Player
+- DeckApi
+- SoundManager
+- UI
+- BlackjackGame
+
+Each class has a dedicated responsibility.
 
 ---
 
-# Game Ending Conditions
+# Future Improvements
 
-## Player Wins Entire Game
+Possible future upgrades:
 
-- Dealer points reach 0 you win
-
-- The player no longer has enough points to place the minimum bet he loses
+- Multiplayer support
+- Online leaderboard
+- Save game progress
+- Casino animations
+- Difficulty modes
+- Dealer AI improvements
+- Achievement system
 
 ---
 
 # Author
 
-Nadav ben moshe
+Nadav ben moshe JS project
