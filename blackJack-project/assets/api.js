@@ -1,59 +1,54 @@
-export class API {
+export class DeckApi {
   constructor() {
-    this.baseUrl = "https://deckofcardsapi.com/api/deck";
-    this.storageKey = "blackjack_data";
+    this.deckId = null;
   }
 
   async createDeck() {
-    const response = await fetch(
-      `${this.baseUrl}/new/shuffle/?deck_count=1`
-    );
-
+    const response = await fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1");
     const data = await response.json();
-
-    return data.deck_id;
+    this.deckId = data.deck_id;
   }
 
-  async drawCards(deckId, count = 1) {
-    const response = await fetch(
-      `${this.baseUrl}/${deckId}/draw/?count=${count}`
-    );
+  async drawCards(count = 1) {
+    if (!this.deckId) {
+      await this.createDeck();
+    }
 
+    const response = await fetch(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=${count}`);
     const data = await response.json();
 
+    if (!data.success || data.remaining < 10) {
+      await this.createDeck();
+      return this.drawCards(count);
+    }
+
     return data.cards.map((card) => ({
-      value: this.convertValue(card.value),
-      suit: this.convertSuit(card.suit),
+      value: this.normalizeValue(card.value),
+      suit: this.normalizeSuit(card.suit),
+      image: card.image,
+      code: card.code
     }));
   }
 
-  convertValue(value) {
-    if (value === "ACE") return "A";
-    if (value === "KING") return "K";
-    if (value === "QUEEN") return "Q";
-    if (value === "JACK") return "J";
+  normalizeValue(value) {
+    const values = {
+      ACE: "A",
+      KING: "K",
+      QUEEN: "Q",
+      JACK: "J"
+    };
 
-    return value;
+    return values[value] || value;
   }
 
-  convertSuit(suit) {
+  normalizeSuit(suit) {
     const suits = {
-      SPADES: "♠",
       HEARTS: "♥",
       DIAMONDS: "♦",
       CLUBS: "♣",
+      SPADES: "♠"
     };
 
-    return suits[suit];
-  }
-
-  saveGame(data) {
-    localStorage.setItem(this.storageKey, JSON.stringify(data));
-  }
-
-  loadGame() {
-    const data = localStorage.getItem(this.storageKey);
-
-    return data ? JSON.parse(data) : null;
+    return suits[suit] || suit;
   }
 }

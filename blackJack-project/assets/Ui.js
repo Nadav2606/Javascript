@@ -1,97 +1,150 @@
 export class UI {
+  constructor() {
+    this.nameScreen = document.getElementById("name-screen");
+    this.gameScreen = document.getElementById("game-screen");
+    this.resultScreen = document.getElementById("result-screen");
 
-  static render(game) {
+    this.playerNameInput = document.getElementById("player-name-input");
+    this.saveNameBtn = document.getElementById("save-name-btn");
 
-    this.renderHand(
-      document.getElementById("player-hand"),
-      game.player.hand
-    );
+    this.playerTitle = document.getElementById("player-title");
+    this.playerScoreTitle = document.getElementById("player-score-title");
 
-    this.renderHand(
-      document.getElementById("dealer-hand"),
-      game.dealer.hand
-    );
+    this.playerPoints = document.getElementById("player-points");
+    this.dealerPoints = document.getElementById("dealer-points");
+    this.currentBet = document.getElementById("current-bet");
 
-    document.getElementById("player-score").textContent =
-      game.player.getScore();
+    this.bettingArea = document.getElementById("betting-area");
+    this.betButtons = document.querySelectorAll(".chip");
+    this.clearBetBtn = document.getElementById("clear-bet-btn");
+    this.startRoundBtn = document.getElementById("start-round-btn");
 
-    document.getElementById("dealer-score").textContent =
-      game.isGameOver
-        ? game.dealer.getScore()
-        : "?";
+    this.dealerCards = document.getElementById("dealer-cards");
+    this.playerCards = document.getElementById("player-cards");
+    this.dealerScore = document.getElementById("dealer-score");
+    this.playerScore = document.getElementById("player-score");
 
-    document.getElementById("result").textContent =
-      game.resultMessage;
+    this.messageBox = document.getElementById("message-box");
 
-    document.getElementById("wins").textContent =
-      game.stats.wins;
+    this.hitBtn = document.getElementById("hit-btn");
+    this.standBtn = document.getElementById("stand-btn");
+    this.doubleBtn = document.getElementById("double-btn");
+    this.newGameBtn = document.getElementById("new-game-btn");
 
-    document.getElementById("losses").textContent =
-      game.stats.losses;
+    this.soundToggleBtn = document.getElementById("sound-toggle-btn");
+    this.musicToggleBtn = document.getElementById("music-toggle-btn");
 
-    document.getElementById("draws").textContent =
-      game.stats.draws;
-
-    document.getElementById("player-name-display").textContent =
-      game.player.name;
-
-    document.getElementById("player-title").textContent =
-      game.player.name;
+    this.resultTitle = document.getElementById("result-title");
+    this.resultText = document.getElementById("result-text");
+    this.nextRoundBtn = document.getElementById("next-round-btn");
   }
 
-  static renderHand(container, hand) {
+  showGameScreen(playerName) {
+    this.nameScreen.classList.remove("active");
+    this.gameScreen.classList.add("active");
+    this.playerTitle.textContent = playerName;
+    this.playerScoreTitle.innerHTML = `${playerName} <span id="player-score">0</span>`;
+    this.playerScore = document.getElementById("player-score");
+  }
 
-    container.innerHTML = "";
+  updatePoints(playerPoints, dealerPoints, currentBet) {
+    this.playerPoints.textContent = playerPoints;
+    this.dealerPoints.textContent = dealerPoints;
+    this.currentBet.textContent = currentBet;
+    this.startRoundBtn.disabled = currentBet <= 0;
+  }
 
-    hand.forEach((card) => {
+  showBetting() {
+    this.bettingArea.classList.remove("hidden");
+  }
 
-      const cardElement = document.createElement("div");
+  hideBetting() {
+    this.bettingArea.classList.add("hidden");
+  }
 
-      const isRed =
-        card.suit === "♥" || card.suit === "♦";
+  clearTable() {
+    this.dealerCards.innerHTML = "";
+    this.playerCards.innerHTML = "";
+    this.dealerScore.textContent = "0";
+    this.playerScore.textContent = "0";
+  }
 
-      cardElement.className =
-        `card ${isRed ? "red" : "black"}`;
+  renderHands(playerCards, dealerCards, playerScore, dealerScore, hideDealerSecondCard = false) {
+    this.playerCards.innerHTML = "";
+    this.dealerCards.innerHTML = "";
 
-      cardElement.innerHTML = `
-        <div class="card-top">${card.value}${card.suit}</div>
-        <div class="card-center">${card.suit}</div>
-        <div class="card-bottom">${card.value}${card.suit}</div>
-      `;
-
-      container.appendChild(cardElement);
+    dealerCards.forEach((card, index) => {
+      if (hideDealerSecondCard && index === 1) {
+        this.dealerCards.appendChild(this.createHiddenCard());
+      } else {
+        this.dealerCards.appendChild(this.createCardElement(card));
+      }
     });
+
+    playerCards.forEach((card) => {
+      this.playerCards.appendChild(this.createCardElement(card));
+    });
+
+    this.playerScore.textContent = playerScore;
+    this.dealerScore.textContent = hideDealerSecondCard ? "?" : dealerScore;
   }
 
-  static updateSoundButton(isOn) {
+  createCardElement(card) {
+    const div = document.createElement("div");
+    const isRed = card.suit === "♥" || card.suit === "♦";
 
-    const button =
-      document.getElementById("sound-toggle");
+    div.className = `card ${isRed ? "red" : "black"}`;
+    div.innerHTML = `
+      <div class="card-top">${card.value}${card.suit}</div>
+      <div class="card-center">${card.suit}</div>
+      <div class="card-bottom">${card.value}${card.suit}</div>
+    `;
 
-    button.textContent =
-      isOn
-        ? "Sound: ON"
-        : "Sound: OFF";
-
-    button.classList.toggle("sound-on", isOn);
+    return div;
   }
 
-  static showGameScreen(playerName) {
-
-    document
-      .getElementById("welcome-screen")
-      .classList.add("hidden");
-
-    document
-      .getElementById("game-screen")
-      .classList.remove("hidden");
-
-    document.getElementById("player-name-display")
-      .textContent = playerName;
+  createHiddenCard() {
+    const div = document.createElement("div");
+    div.className = "card hidden-card";
+    div.textContent = "?";
+    return div;
   }
 
-  static showMessage(message) {
-    document.getElementById("result").textContent =
-      message;
+  setMessage(message) {
+    this.messageBox.textContent = message;
+  }
+
+  enableGameButtons(canDouble = true) {
+    this.hitBtn.disabled = false;
+    this.standBtn.disabled = false;
+    this.doubleBtn.disabled = !canDouble;
+  }
+
+  disableGameButtons() {
+    this.hitBtn.disabled = true;
+    this.standBtn.disabled = true;
+    this.doubleBtn.disabled = true;
+  }
+
+  enableBettingButtons() {
+    this.betButtons.forEach((btn) => btn.disabled = false);
+    this.clearBetBtn.disabled = false;
+  }
+
+  disableBettingButtons() {
+    this.betButtons.forEach((btn) => btn.disabled = true);
+    this.clearBetBtn.disabled = true;
+    this.startRoundBtn.disabled = true;
+  }
+
+  showResultScreen(type, title, text, isFinal = false) {
+    this.resultScreen.className = `result-screen active ${type}`;
+    this.resultTitle.textContent = title;
+    this.resultText.textContent = text;
+    this.nextRoundBtn.textContent = isFinal ? "New Game" : "Next Round";
+  }
+
+  hideResultScreen() {
+    this.resultScreen.className = "result-screen";
   }
 }

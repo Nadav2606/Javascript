@@ -1,76 +1,87 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blackjack</title>
-    <link rel="stylesheet" href="./styles/style.css" />
-    <script type="module" src="./assets/main.js" defer></script>
-  </head>
-  <body>
-    <main class="game-container">
-      <h1>Blackjack🃏</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blackjack Game</title>
+  <link rel="stylesheet" href="./styles/style.css" />
+</head>
+<body>
+  <main class="app">
+    <section id="name-screen" class="name-screen active">
+      <div class="name-card">
+        <h1>Blackjack</h1>
+        <p>Enter player name</p>
+        <input id="player-name-input" type="text" placeholder="Player name" />
+        <button id="save-name-btn" class="main-btn">Start Game</button>
+      </div>
+    </section>
 
-      <section id="welcome-screen" class="panel">
-        <h2>Welcome</h2>
-
-        <input
-          id="player-name-input"
-          type="text"
-          placeholder="Enter player name"
-        />
-
-        <button id="save-name-btn">Start</button>
-      </section>
-
-      <section id="game-screen" class="hidden">
-        <div class="top-bar">
-          <div>
-            Player:🙆‍♂️
-            <span id="player-name-display">Player</span>
-          </div>
-
-          <button id="sound-toggle">Sound: OFF</button>
+    <section id="game-screen" class="game-screen">
+      <header class="top-bar">
+        <div>
+          <h1>Blackjack</h1>
+          <p id="player-title">Player</p>
         </div>
 
-        <section class="score-board">
-          <div class="score-card">
-            <h3>Wins</h3>
-            <span id="wins">0</span>
-          </div>
+        <div class="top-buttons">
+          <button id="music-toggle-btn" class="small-btn">Music OFF</button>
+          <button id="sound-toggle-btn" class="small-btn">Sound OFF</button>
+          <button id="new-game-btn" class="small-btn danger">New</button>
+        </div>
+      </header>
 
-          <div class="score-card">
-            <h3>Losses</h3>
-            <span id="losses">0</span>
-          </div>
+      <section class="stats">
+        <div><span>Player</span><strong id="player-points">1000</strong></div>
+        <div><span>Dealer</span><strong id="dealer-points">1000</strong></div>
+        <div><span>Bet</span><strong id="current-bet">0</strong></div>
+      </section>
 
-          <div class="score-card">
-            <h3>Draws</h3>
-            <span id="draws">0</span>
-          </div>
-        </section>
+      <section id="betting-area" class="betting-area">
+        <div class="chips">
+          <button class="chip chip-10" data-bet="10">10</button>
+          <button class="chip chip-50" data-bet="50">50</button>
+          <button class="chip chip-100" data-bet="100">100</button>
+          <button class="chip chip-200" data-bet="200">200</button>
+          <button class="chip chip-500" data-bet="500">500</button>
+        </div>
 
-        <section class="section">
-          <h2>Dealer🤖</h2>
-          <div id="dealer-hand" class="hand"></div>
-          <div>Score: <span id="dealer-score">?</span></div>
-        </section>
-
-        <section class="section">
-          <h2 id="player-title">🙎 Player</h2>
-          <div id="player-hand" class="hand"></div>
-          <div>Score: <span id="player-score">0</span></div>
-        </section>
-
-        <h2 id="result"></h2>
-
-        <div class="buttons">
-          <button id="start-btn">New Game</button>
-          <button id="hit-btn">Hit</button>
-          <button id="stand-btn">Stand</button>
-          <button id="reset-btn">Reset Score</button>
+        <div class="bet-actions">
+          <button id="clear-bet-btn" class="secondary-btn">Clear</button>
+          <button id="start-round-btn" class="main-btn" disabled>Start Round</button>
         </div>
       </section>
-    </main>
-  </body>
+
+      <section class="table">
+        <div class="hand dealer-hand">
+          <h2>Dealer <span id="dealer-score">0</span></h2>
+          <div id="dealer-cards" class="cards"></div>
+        </div>
+
+        <div id="message-box" class="message">Place your bet</div>
+
+        <div class="controls">
+          <button id="hit-btn" class="play-btn hit" disabled>Hit</button>
+          <button id="double-btn" class="play-btn double" disabled>x2</button>
+          <button id="stand-btn" class="play-btn stand" disabled>Stand</button>
+        </div>
+
+        <div class="hand player-hand">
+          <h2 id="player-score-title">Player <span id="player-score">0</span></h2>
+          <div id="player-cards" class="cards"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="result-screen" class="result-screen">
+      <div class="result-card">
+        <h2 id="result-title">Result</h2>
+        <p id="result-text"></p>
+        <button id="next-round-btn" class="main-btn">Next Round</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./assets/main.js"></script>
+</body>
 </html>
