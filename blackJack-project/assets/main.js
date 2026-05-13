@@ -42,8 +42,8 @@ class Player {
 
 class SoundManager {
   constructor() {
-    this.soundEnabled = false;
-    this.musicEnabled = false;
+    this.soundEnabled = localStorage.getItem("soundEnabled") === "true";
+    this.musicEnabled = localStorage.getItem("musicEnabled") === "true";
 
     this.backgroundMusic = new Audio("./sounds/backgroundMusic.mp3");
     this.backgroundMusic.loop = true;
@@ -60,11 +60,13 @@ class SoundManager {
 
   toggleSound() {
     this.soundEnabled = !this.soundEnabled;
+    localStorage.setItem("soundEnabled", this.soundEnabled);
     return this.soundEnabled;
   }
 
   toggleMusic() {
     this.musicEnabled = !this.musicEnabled;
+    localStorage.setItem("musicEnabled", this.musicEnabled);
 
     if (this.musicEnabled) {
       this.backgroundMusic.play().catch(() => {});
@@ -96,6 +98,20 @@ class BlackjackGame {
     this.currentBet = 0;
     this.roundActive = false;
     this.finalGameOver = false;
+
+    const savedName = localStorage.getItem("playerName");
+
+    if (savedName) {
+      this.ui.playerNameInput.value = savedName;
+    }
+
+    this.ui.soundToggleBtn.textContent = this.sound.soundEnabled
+      ? "Sound ON"
+      : "Sound OFF";
+
+    this.ui.musicToggleBtn.textContent = this.sound.musicEnabled
+      ? "Music ON"
+      : "Music OFF";
 
     this.bindEvents();
   }
@@ -146,8 +162,21 @@ class BlackjackGame {
   async startGame() {
     const playerName = this.ui.playerNameInput.value.trim() || "Player";
 
-    this.player = new Player(playerName, 1000);
-    this.dealer = new Player("Dealer", 1000);
+    localStorage.setItem("playerName", playerName);
+
+    const savedPlayerPoints = localStorage.getItem("playerPoints");
+    const savedDealerPoints = localStorage.getItem("dealerPoints");
+
+    this.player = new Player(
+      playerName,
+      savedPlayerPoints ? Number(savedPlayerPoints) : 1000,
+    );
+
+    this.dealer = new Player(
+      "Dealer",
+      savedDealerPoints ? Number(savedDealerPoints) : 1000,
+    );
+
     this.currentBet = 0;
     this.roundActive = false;
     this.finalGameOver = false;
@@ -159,11 +188,13 @@ class BlackjackGame {
     this.ui.showBetting();
     this.ui.enableBettingButtons();
     this.ui.disableGameButtons();
+
     this.ui.updatePoints(
       this.player.points,
       this.dealer.points,
       this.currentBet,
     );
+
     this.ui.setMessage("Bets on");
   }
 
@@ -177,11 +208,13 @@ class BlackjackGame {
 
     this.player.points -= amount;
     this.currentBet += amount;
+
     this.ui.updatePoints(
       this.player.points,
       this.dealer.points,
       this.currentBet,
     );
+
     this.ui.setMessage("Press Start Round when ready");
   }
 
@@ -190,11 +223,13 @@ class BlackjackGame {
 
     this.player.points += this.currentBet;
     this.currentBet = 0;
+
     this.ui.updatePoints(
       this.player.points,
       this.dealer.points,
       this.currentBet,
     );
+
     this.ui.setMessage("Bets OFF");
   }
 
@@ -231,7 +266,6 @@ class BlackjackGame {
     this.sound.play("card");
     this.renderHiddenDealer();
 
-    // ניצחון אוטומטי בקבלת 21 בשני הקלפים הראשונים
     if (this.player.getScore() === 21) {
       this.ui.disableGameButtons();
       this.ui.setMessage("BlackJack Win");
@@ -274,7 +308,10 @@ class BlackjackGame {
     if (this.player.getScore() > 21) {
       this.ui.disableGameButtons();
       this.ui.setMessage("Bust");
-      setTimeout(() => this.finishRound("lose"), 1500);
+
+      setTimeout(() => {
+        this.finishRound("lose");
+      }, 1500);
     }
   }
 
@@ -287,7 +324,10 @@ class BlackjackGame {
     await this.dealerTurn();
 
     const result = this.getRoundResult();
-    setTimeout(() => this.finishRound(result), 1600);
+
+    setTimeout(() => {
+      this.finishRound(result);
+    }, 1600);
   }
 
   async doubleBet() {
@@ -300,6 +340,7 @@ class BlackjackGame {
 
     this.player.points -= this.currentBet;
     this.currentBet *= 2;
+
     this.ui.updatePoints(
       this.player.points,
       this.dealer.points,
@@ -317,19 +358,29 @@ class BlackjackGame {
     if (this.player.getScore() === 21) {
       this.ui.setMessage("BlackJack Win");
       this.sound.play("blackjack");
-      setTimeout(() => this.finishRound("blackjack"), 1500);
+
+      setTimeout(() => {
+        this.finishRound("blackjack");
+      }, 1500);
+
       return;
     }
 
     if (this.player.getScore() > 21) {
-      setTimeout(() => this.finishRound("lose"), 1500);
+      setTimeout(() => {
+        this.finishRound("lose");
+      }, 1500);
+
       return;
     }
 
     await this.dealerTurn();
 
     const result = this.getRoundResult();
-    setTimeout(() => this.finishRound(result), 1600);
+
+    setTimeout(() => {
+      this.finishRound(result);
+    }, 1600);
   }
 
   async dealerTurn() {
@@ -353,6 +404,7 @@ class BlackjackGame {
     if (dealerScore > 21) return "win";
     if (playerScore > dealerScore) return "win";
     if (playerScore < dealerScore) return "lose";
+
     return "draw";
   }
 
@@ -365,8 +417,7 @@ class BlackjackGame {
     let type = "";
 
     if (result === "blackjack") {
-      const winAmount = this.currentBet * 2;
-      this.player.points += winAmount;
+      this.player.points += this.currentBet * 2;
       this.dealer.points -= this.currentBet;
 
       title = "BlackJack Win";
@@ -374,8 +425,7 @@ class BlackjackGame {
       type = "win";
       this.sound.play("win");
     } else if (result === "win") {
-      const winAmount = this.currentBet * 2;
-      this.player.points += winAmount;
+      this.player.points += this.currentBet * 2;
       this.dealer.points -= this.currentBet;
 
       title = "You Win";
@@ -399,11 +449,16 @@ class BlackjackGame {
     }
 
     this.currentBet = 0;
+
+    localStorage.setItem("playerPoints", this.player.points);
+    localStorage.setItem("dealerPoints", this.dealer.points);
+
     this.ui.updatePoints(
       this.player.points,
       this.dealer.points,
       this.currentBet,
     );
+
     this.ui.disableGameButtons();
 
     this.finalGameOver = this.player.points <= 0 || this.dealer.points <= 0;
@@ -431,11 +486,13 @@ class BlackjackGame {
     this.ui.clearTable();
     this.ui.showBetting();
     this.ui.enableBettingButtons();
+
     this.ui.updatePoints(
       this.player.points,
       this.dealer.points,
       this.currentBet,
     );
+
     this.ui.setMessage("Place your bet");
   }
 
@@ -463,6 +520,9 @@ class BlackjackGame {
     this.currentBet = 0;
     this.roundActive = false;
     this.finalGameOver = false;
+
+    localStorage.removeItem("playerPoints");
+    localStorage.removeItem("dealerPoints");
 
     this.ui.hideResultScreen();
     this.ui.gameScreen.classList.remove("active");
